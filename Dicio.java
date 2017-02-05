@@ -3,25 +3,25 @@ package hashpkg;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
 
 public class Dicio {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
 		
-//M√©todo Atrav√©s Do Console
+//MÈtodo AtravÈs Do Console
 		
 		/* Scanner qp = new Scanner(System.in);
-		System.out.print("Digite a quantidade de palavras que o dicion√°rio ter√°: ");
+		System.out.print("Digite a quantidade de palavras que o dicion·rio ter·: ");
 		int quantPalavras = qp.nextInt();
 
 		String[] dicionario = new String[quantPalavras];
 		Scanner dicioScan = new Scanner(System.in);
 		for (int i = 0; i < quantPalavras; i++) {
-			System.out.print("Digite a " + (i + 1) + "¬™ palavra do dicion√°rio: ");
+			System.out.print("Digite a " + (i + 1) + "™ palavra do dicion·rio: ");
 			dicionario[i] = dicioScan.nextLine();
 		}
 
@@ -36,16 +36,16 @@ public class Dicio {
 		texto = scanner.nextLine();
 
 		String[] textoDiv = texto.split(" ");
-		int cont = textoDiv.length - 1; */
+		int cont = textoDiv.length - 1;
 
-//M√©todo Atrav√©s De Arquivos
+//MÈtodo AtravÈs De Arquivos NIO2
 		
 		Scanner scanner = new Scanner(System.in);
 		String[] dicionario;
 		String texto = "";
 		
-		Path pathDicio = Paths.get("TesteDePalavras.txt");
-		Path pathTexto = Paths.get("TesteDeTexto.txt");
+		Path pathDicio = Paths.get("C:\\Users\\Rodri\\workspace\\Hash\\src\\hashpkg\\TesteDePalavras.txt");
+		Path pathTexto = Paths.get("C:\\Users\\Rodri\\workspace\\Hash\\src\\hashpkg\\TesteDeTexto.txt");
 		byte[] bytesT = Files.readAllBytes(pathTexto);
 		byte[] bytesD = Files.readAllBytes(pathDicio);
 		
@@ -68,8 +68,45 @@ public class Dicio {
 	    	texto = texto + textoc;
 	    }
 		String[] textoDiv = texto.split(" ");
-		int contT = textoDiv.length - 1;
+		int contT = textoDiv.length - 1; */
 		
+//MÈtodo AtravÈs De Arquivos Java.io
+		
+		//ler um arquivo e imprimir na tela
+		
+		//InputStream lerD = new FileInputStream("C:\\Users\\Rodri\\workspace\\Hash\\src\\hashpkg\\TesteDePalavras.txt");
+		//Scanner inD = new Scanner(lerD);
+		//while (inD.hasNextLine()) {
+			//System.out.println(inD.nextLine());
+		//}
+		
+		Scanner scanner = new Scanner(System.in);
+		BufferedReader stringD = new BufferedReader(new InputStreamReader (new FileInputStream ("C:\\Users\\Rodri\\workspace\\Hash\\src\\hashpkg\\TesteDePalavras.txt")));
+		String tempD = stringD.readLine();
+	    String[] dicionario = tempD.split(";");
+		int contD = dicionario.length - 1;
+		System.out.println("- Palavras do Dicion·rio:\n");
+		for (int i = 0; i <= contD; i++){
+			System.out.println(dicionario[i]);
+		}
+
+		HashSet<String> tabelaHash = new HashSet<String>();
+		for (int i = 0; i <= contD; i++) {
+			tabelaHash.add(dicionario[i]);
+		}
+
+		BufferedReader stringT = new BufferedReader(new InputStreamReader (new FileInputStream ("C:\\Users\\Rodri\\workspace\\Hash\\src\\hashpkg\\TesteDeTexto.txt")));
+		String tempT = stringT.readLine();
+	    String[] textoDiv = tempT.split(" ");
+		int contT = textoDiv.length - 1;
+		System.out.println("\n- Palavras do Texto:\n");
+		for (int i = 0; i <= contT; i++){
+			System.out.println(textoDiv[i]);
+		}
+
+	    //inD.close();
+	    stringT.close();
+
 // Troca de adjacentes
 
 		for (int i = 0; i <= contT; i++) {
@@ -159,7 +196,7 @@ public class Dicio {
 			char[] palavraChar = textoDiv[i].toCharArray();
 			if (tabelaHash.contains(textoDiv[i]) == false) {
 				if (palavraChar.length > 1) {
-					for (int j = 0; j < palavraChar.length - 1; j++) {
+					for (int j = 0; j < palavraChar.length; j++) {
 						palavraChar = textoDiv[i].toCharArray();
 						palavraChar[j] = ' ';
 						String palavra = String.valueOf(palavraChar);
